@@ -60,18 +60,6 @@ CREATE TABLE item_venda (
     FOREIGN KEY (cod_produto) REFERENCES produto(cod_produto)
 );
 
-DELIMITER $$
-CREATE TRIGGER after_venda_insert
-AFTER INSERT ON item_venda
-FOR EACH ROW
-BEGIN
-    UPDATE produto 
-    SET quantidade = quantidade - NEW.quantidade
-    WHERE cod_produto = NEW.cod_produto;
-END;
-$$
-DELIMITER ;
-
 CREATE TABLE caixa (
     cod_caixa INT AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('entrada', 'saida') NOT NULL,
@@ -100,4 +88,5 @@ INSERT INTO pvp (nome_pvp, percentual, tipo_pvp, ativo) VALUES
 -- Categoria Produto
 INSERT INTO categoria_produto (nome_categoria, pvp_categoria, descricao_categoria) VALUES
 ('Alimentos Básicos',1,'Arroz, feijão, macarrão, farinha, açúcar, sal e outros itens essenciais.'),
+
 ('Carnes e Aves',2,'Carne bovina, suína, frango, peixe e derivados.');
