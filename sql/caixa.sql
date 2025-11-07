@@ -42,24 +42,6 @@ CREATE TABLE unidade_medida (
     sigla_unidade VARCHAR(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
-CREATE TABLE produto (
-    cod_produto INT AUTO_INCREMENT PRIMARY KEY,
-    nome_produto VARCHAR(100) NOT NULL,
-    descricao_produto TEXT,
-    preco_compra DECIMAL(10,2) NOT NULL,
-    preco_venda DECIMAL(10,2) NOT NULL,
-    quantidade INT NOT NULL DEFAULT 0,
-    cod_unidade INT NOT NULL,
-    codigo_barras VARCHAR(13) UNIQUE NOT NULL,
-    ativo BOOLEAN NOT NULL DEFAULT TRUE,
-    cod_categoria INT NOT NULL,
-    cod_pvp INT NOT NULL,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cod_categoria) REFERENCES categoria_produto(cod_categoria),
-    FOREIGN KEY (cod_pvp) REFERENCES pvp(cod_pvp),
-    FOREIGN KEY (cod_unidade) REFERENCES unidade_medida(cod_unidade)
-);
-
 CREATE TABLE venda (
     cod_venda INT AUTO_INCREMENT PRIMARY KEY,
     cod_usuario INT NOT NULL,
@@ -119,9 +101,3 @@ INSERT INTO pvp (nome_pvp, percentual, tipo_pvp, ativo) VALUES
 INSERT INTO categoria_produto (nome_categoria, pvp_categoria, descricao_categoria) VALUES
 ('Alimentos Básicos',1,'Arroz, feijão, macarrão, farinha, açúcar, sal e outros itens essenciais.'),
 ('Carnes e Aves',2,'Carne bovina, suína, frango, peixe e derivados.');
-
--- Produtos de exemplo
-INSERT INTO produto (nome_produto, descricao_produto, preco_compra, preco_venda, quantidade, cod_unidade, codigo_barras, ativo, cod_categoria, cod_pvp) VALUES
-('Arroz Branco 5kg','Arroz tipo 1, embalagem 5kg',20.00,25.00,50,1,'1234567890123',TRUE,1,1),
-('Feijão Carioca 1kg','Feijão tipo 1, pacote 1kg',7.00,9.00,100,2,'1234567890124',TRUE,1,1),
-('Frango Congelado 1kg','Peito de frango congelado 1kg',12.00,15.00,80,1,'1234567890125',TRUE,2,2);
